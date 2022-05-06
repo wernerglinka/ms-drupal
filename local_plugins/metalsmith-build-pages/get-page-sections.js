@@ -1,6 +1,7 @@
 const hexToRgba = require("./hex-to-rgba");
 const isColorDark = require("./is-color-dark");
 const toCamelCase = require("./to-camel-case");
+const baseComponentsList = require("./base-components");
 
 /**
  * getPageSections
@@ -48,6 +49,12 @@ const getPageSections = function(thisPage, allParagraphs) {
     // get the section base components data
     const sectionBaseComponentsData = {};
     Object.keys(baseComponents).forEach(key => {
+      console.log(key);
+      console.log(baseComponentsList[key]);
+
+      baseComponentsList[key]();
+      // baseComponentsList[key];
+
       // if baseComponents[key] is an array we loop over it and create a new object for each item
       // for example for multiple CTAs
       if (Array.isArray(baseComponents[key])) {
