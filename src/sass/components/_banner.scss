@@ -18,7 +18,7 @@
     padding: 50px 0;
 
     @media (max-width: 767px) {
-      flex-direction: column-reverse;
+      flex-direction: column-isReverse;
       @media (max-width: 767px) {
         padding: 0;
       }

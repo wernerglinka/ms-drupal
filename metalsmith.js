@@ -81,7 +81,7 @@ Metalsmith(__dirname)
       blog: {
         pattern: "blog/*.md",
         sortBy: "date",
-        reverse: true,
+        isReverse: true,
         limit: 10,
       },
     })

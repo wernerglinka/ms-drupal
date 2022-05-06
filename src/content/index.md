@@ -94,7 +94,7 @@ sections:
     hasBottomMargin: false
     hasTopPadding: true
     hasBottomPadding: false
-    reverse: true
+    isReverse: true
     text:
       title: "Important implementation details"
       header: "h3"
@@ -143,7 +143,7 @@ sections:
     hasBottomMargin: false
     hasTopPadding: false
     hasBottomPadding: true
-    reverse: false
+    isReverse: false
     text:
       title: "Digital Asset Management with Cloudinary"
       header: "h3"
