@@ -1,0 +1,16 @@
+/**
+ * Page section Intro
+ */
+
+ .section-intro {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  &.hasTopPadding {
+    padding-top: 40px;
+  }
+
+  &.hasBottomPadding {
+    padding-bottom: 40px;
+  }
+}
