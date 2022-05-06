@@ -34,7 +34,7 @@ sections:
         videoId: ""
     mediaType: Image
     video:
-      src: youtube
+      vSrc: youtube
       id: ""
       tn: ""
       aspectRatio: ""
@@ -44,8 +44,8 @@ sections:
       alt: "Metalsmith Javascript"
       aspectRatio: "56.25"
       caption: "Photo by Josh Hild from Pexels"
-    lottieData:
-      src: ""
+    lottie:
+      lSrc: ""
       control:
         autoplay: true
         loop: true
@@ -114,7 +114,7 @@ sections:
         isExternal: true
     mediaType: Image
     video:
-      src: ""
+      vSrc: ""
       id: ""
       tn: ""
       aspectRatio: ""
@@ -122,8 +122,8 @@ sections:
       src: "v1589394777/Industrial/test1_gfou1m_o5oebv.jpg"
       alt: "nunjucks"
       aspectRatio: "56.25"
-    lottieData:
-      src: ""
+    lottie:
+      lSrc: ""
       control:
         autoplay: true
         loop: true
@@ -163,7 +163,7 @@ sections:
         isExternal: true
     mediaType: Image
     video:
-      src: ""
+      vSrc: ""
       id: ""
       tn: ""
       aspectRatio: ""
@@ -171,11 +171,10 @@ sections:
       src: "v1639779216/gatsby4mdx/cloudinary-logo_njlkd9.jpg"
       alt: "cloudinary"
       aspectRatio: "56.25"
-    lottieData:
-      src: ""
-      control:
-        autoplay: true
-        loop: true
+    lottie:
+      lSrc: ""
+      autoplay: true
+      loop: true
     icon: ""
     audio:
       bgImage: ""

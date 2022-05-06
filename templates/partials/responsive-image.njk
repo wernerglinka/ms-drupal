@@ -10,5 +10,7 @@
     <img class="low-res" src="{{ lowResImagesrc }}" alt="{{ image.alt }}"/>
     <img class="high-res" src="" alt="{{ image.alt }}" data-prefix="{{ siteMeta.imagePrefix }}" data-source="{{ image.src }}"/>
   </div>
+  {% if image.caption %}
   <p class="caption">{{ image.caption }}</p>
+  {% endif %}
 {% endmacro %}

@@ -7,20 +7,30 @@ const buildPageSections = require("./get-page-sections");
 const includeFragment = require("./query-fragments/include");
 const sectionedPageFragment = require("./query-fragments/sectioned-page");
 const sectionIntroFragment = require("./query-fragments/section-intro");
+const sectionMediaFragment = require("./query-fragments/section-media");
 const sectionCtaBannerFragment = require("./query-fragments/section-cta-banner");
 const paragraphCommonsFragment = require("./query-fragments/paragraph-commons");
 const paragraphTextFragment = require("./query-fragments/paragraph-text");
 const paragraphCtaFragment = require("./query-fragments/paragraph-cta");
+const paragraphAudioFragment = require("./query-fragments/paragraph-audio");
+const paragraphImageFragment = require("./query-fragments/paragraph-image");
+const paragraphLottieFragment = require("./query-fragments/paragraph-lottie");
+const paragraphVideoFragment = require("./query-fragments/paragraph-video");
 
 const getPageDataQuery = (serverURL, page) => {
   const query = commonTags.oneLineTrim`
     ${includeFragment}
     ${sectionedPageFragment}
     ${sectionIntroFragment}
+    ${sectionMediaFragment}
     ${sectionCtaBannerFragment}
     ${paragraphCommonsFragment}
     ${paragraphTextFragment}
     ${paragraphCtaFragment}
+    ${paragraphAudioFragment}
+    ${paragraphImageFragment}
+    ${paragraphLottieFragment}
+    ${paragraphVideoFragment}
   `;
   return serverURL + page + query;
 };
