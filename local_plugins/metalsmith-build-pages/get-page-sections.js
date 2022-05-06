@@ -46,15 +46,13 @@ const getPageSections = function(thisPage, allParagraphs) {
       }
     });
 
+    /* TODO
+     *  put all base components that are not array into arrays so we can streamline the field evaluation <<<<<<<<<<<<<<<<<<<<<<<<<
+     */
+
     // get the section base components data
     const sectionBaseComponentsData = {};
     Object.keys(baseComponents).forEach(key => {
-      console.log(key);
-      console.log(baseComponentsList[key]);
-
-      baseComponentsList[key]();
-      // baseComponentsList[key];
-
       // if baseComponents[key] is an array we loop over it and create a new object for each item
       // for example for multiple CTAs
       if (Array.isArray(baseComponents[key])) {
@@ -81,33 +79,14 @@ const getPageSections = function(thisPage, allParagraphs) {
         allParagraphs.forEach(paragraph => {
           if (paragraph.id === baseComponents[key].id) {
             Object.keys(paragraph.attributes).forEach(pkey => {
-              if (pkey.startsWith("field_")) {
-                const newKey = pkey.replace("field_", "");
-                // Special case for commons base component. We insert common fields in the section
-                // fields rather then the base component fields
-                if (key === "commons") {
-                  if (typeof paragraph.attributes[pkey] === "object" && paragraph.attributes[pkey] !== null) {
-                    // The color field is an object with the color value in hex and the opacity
-                    if (paragraph.attributes[pkey].color) {
-                      // convert the hex color to rgb
-                      const rgba = hexToRgba(paragraph.attributes[pkey].color, paragraph.attributes[pkey].opacity);
-                      Object.assign(sectionFields, { [newKey]: rgba });
-                      // check if color is too dark and add new field 'colorIsDark'
-                      Object.assign(sectionFields, { colorIsDark: isColorDark(rgba) });
-                    } else {
-                      Object.assign(sectionFields, { [newKey]: paragraph.attributes[pkey] });
-                    }
-                  } else {
-                    // All other common fields are just a key/value pair
-                    Object.assign(sectionFields, { [newKey]: paragraph.attributes[pkey] || "" });
-                  }
-                } else if (typeof paragraph.attributes[pkey] === "object" && paragraph.attributes[pkey] !== null) {
-                  // An object indicates a formatted text field. We are only using the value field
-                  Object.assign(sectionBaseComponentsData[key], { [newKey]: paragraph.attributes[pkey].value });
-                } else {
-                  // Other fields are key/value pairs
-                  Object.assign(sectionBaseComponentsData[key], { [newKey]: paragraph.attributes[pkey] });
-                }
+              // Special case for commons base component. We insert common fields in the section
+              // fields rather then the base component fields
+              if (key === "commons") {
+                // commons fields are not objects, they are key/value pairs
+                baseComponentsList[key](paragraph, sectionFields, key, pkey);
+              } else {
+                // while other fields are ob jects with key/value properties
+                baseComponentsList[key](paragraph, sectionBaseComponentsData, key, pkey);
               }
             });
           }
