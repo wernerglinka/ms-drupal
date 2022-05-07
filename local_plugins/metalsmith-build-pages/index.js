@@ -11,7 +11,7 @@ const sectionMediaFragment = require("./query-fragments/section-media");
 const sectionCtaBannerFragment = require("./query-fragments/section-cta-banner");
 const paragraphCommonsFragment = require("./query-fragments/paragraph-commons");
 const paragraphTextFragment = require("./query-fragments/paragraph-text");
-const paragraphCtaFragment = require("./query-fragments/paragraph-cta");
+const paragraphCtasFragment = require("./query-fragments/paragraph-ctas");
 const paragraphAudioFragment = require("./query-fragments/paragraph-audio");
 const paragraphImageFragment = require("./query-fragments/paragraph-image");
 const paragraphLottieFragment = require("./query-fragments/paragraph-lottie");
@@ -26,7 +26,7 @@ const getPageDataQuery = (serverURL, page) => {
     ${sectionCtaBannerFragment}
     ${paragraphCommonsFragment}
     ${paragraphTextFragment}
-    ${paragraphCtaFragment}
+    ${paragraphCtasFragment}
     ${paragraphAudioFragment}
     ${paragraphImageFragment}
     ${paragraphLottieFragment}

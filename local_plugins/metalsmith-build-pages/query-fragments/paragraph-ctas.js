@@ -4,7 +4,7 @@ const commonTags = require("common-tags");
  * query fragment lists all scarce fields for a sectioned page
  */
 module.exports = commonTags.oneLineTrim`
-  &fields[paragraph--cta]=
+  &fields[paragraph--ctas]=
     id,
     field_button_style,
     field_is_button,

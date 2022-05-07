@@ -47,7 +47,7 @@ const getPageSections = function(thisPage, allParagraphs) {
     });
 
     /* TODO
-     *  put all base components that are not array into arrays so we can streamline the field evaluation <<<<<<<<<<<<<<<<<<<<<<<<<
+     *  put all base components that are not array into arrays so we can streamline the field evaluation ???? <<<<<<<<<<<<<<<<<<<<<<<<<
      */
 
     // get the section base components data
@@ -57,21 +57,9 @@ const getPageSections = function(thisPage, allParagraphs) {
       // for example for multiple CTAs
       if (Array.isArray(baseComponents[key])) {
         sectionBaseComponentsData[key] = [];
-        let temp = {};
-        baseComponents[key].forEach(baseComponentObject => {
-          // Match base component ID with a paragraph ID
-          allParagraphs.forEach(paragraph => {
-            if (paragraph.id === baseComponentObject.id) {
-              // Normalize the keys and build a temporary object
-              Object.keys(paragraph.attributes).forEach(pkey => {
-                if (pkey.startsWith("field_")) {
-                  const newKey = pkey.replace("field_", "");
-                  temp = { ...temp, [newKey]: paragraph.attributes[pkey] };
-                }
-              });
-            }
-          });
-          sectionBaseComponentsData[key].push(temp);
+
+        baseComponents[key].forEach(obj => {
+          baseComponentsList[key](allParagraphs, obj, sectionBaseComponentsData, key);
         });
       } else {
         sectionBaseComponentsData[key] = {};
@@ -82,10 +70,10 @@ const getPageSections = function(thisPage, allParagraphs) {
               // Special case for commons base component. We insert common fields in the section
               // fields rather then the base component fields
               if (key === "commons") {
-                // commons fields are not objects, they are key/value pairs
-                baseComponentsList[key](paragraph, sectionFields, key, pkey);
+                // commons fields are not objects, they are key/value pairs to be inserted as section fields
+                baseComponentsList.commons(paragraph, sectionFields, key, pkey);
               } else {
-                // while other fields are ob jects with key/value properties
+                // while other fields are objects with key/value properties
                 baseComponentsList[key](paragraph, sectionBaseComponentsData, key, pkey);
               }
             });
@@ -94,7 +82,7 @@ const getPageSections = function(thisPage, allParagraphs) {
       }
     });
 
-    // delete commons base component as its properties are already added to the sectionFields object
+    // delete the empty commons base component as its properties are already added to the sectionFields object
     delete sectionBaseComponentsData.commons;
 
     // a single sections object
