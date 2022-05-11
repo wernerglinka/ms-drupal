@@ -2,9 +2,9 @@
 
 <footer>
   <div class="container">
-    <p>Last site build: {{ stats.atime | UTCdate }}</p>
-    <p>Metalsmith version: {{ msVersion }}</p>
-    <p>Node version: {{ nodeVersion }}</p>
+    <div class="brand">
+        <a class="js-home-link" href="/">{{ icon("ms-bug") }}</a>
+      </div>
     <p class="copyright">
       © 2022 - Build with Metalsmith
     </p>

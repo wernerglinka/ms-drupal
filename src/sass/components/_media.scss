@@ -15,11 +15,8 @@
   }
 
   .content {
-    padding: 50px 0;
-
     @media (max-width: 767px) {
       flex-direction: column-reverse;
-      padding-top: 0;
     }
 
     > div {

@@ -14,31 +14,33 @@ const baseComponentsList = require("./base-components");
 const getPageSections = function(thisPage, allParagraphs) {
   const allSections = [];
 
-  // Get all paragraph sections
-  // if allParagraphs is null then we got a page without sections
-  const allSectionData = allParagraphs && allParagraphs.filter(section => section.type.includes("paragraph--section_"));
-
-  // Get the page sections
+  // Get the sections type and ID for this page
   // page sections are implemented as Drupal paragraphs they can be accessed via included.relationships
   const pageSectionsArray = thisPage.relationships.field_sections.data;
 
+  // Get all paragraph sections data for this site
+  const allSectionData = allParagraphs && allParagraphs.filter(section => section.type.includes("paragraph--section_"));
+
+  // process the page sections
+  // for each section in this page, loop over all sections in the site and find the matching section base components
   pageSectionsArray.forEach(section => {
     // Get the section name
     const thisSectionName = section.type.replace("paragraph--section_", "");
-    // Get the component ID
+
+    // Get the section ID. We'll use this to get the base components for this section
     const thisSectionID = section.id;
 
-    // Get section fields and base component IDs
+    // Get the base component IDs for this section
     const sectionData = allSectionData.filter(thisSectionData => thisSectionData.id === thisSectionID);
 
-    // Build a normalized section fields object
+    // Build object with the simple fields for each section
     const sectionFields = {};
     Object.keys(sectionData[0].attributes).forEach(key => {
       sectionFields[key.replace("field_", "")] = sectionData[0].attributes[key];
     });
 
-    // Build a normalized base component object which includes the object ID.
-    // We'll use the ob ject ID to get the base component data
+    // Build a base component object which includes the object ID.
+    // We'll use the object ID to get the base component data
     const baseComponents = {};
     Object.keys(sectionData[0].relationships).forEach(key => {
       if (key.startsWith("field_")) {
@@ -46,44 +48,12 @@ const getPageSections = function(thisPage, allParagraphs) {
       }
     });
 
-    /* TODO
-     *  put all base components that are not array into arrays so we can streamline the field evaluation ???? <<<<<<<<<<<<<<<<<<<<<<<<<
-     */
-
     // get the section base components data
     const sectionBaseComponentsData = {};
     Object.keys(baseComponents).forEach(key => {
-      // if baseComponents[key] is an array we loop over it and create a new object for each item
-      // for example for multiple CTAs
-      if (Array.isArray(baseComponents[key])) {
-        sectionBaseComponentsData[key] = [];
-
-        baseComponents[key].forEach(obj => {
-          baseComponentsList[key](allParagraphs, obj, sectionBaseComponentsData, key);
-        });
-      } else {
-        sectionBaseComponentsData[key] = {};
-        // Match base component ID with a paragraph ID
-        allParagraphs.forEach(paragraph => {
-          if (paragraph.id === baseComponents[key].id) {
-            Object.keys(paragraph.attributes).forEach(pkey => {
-              // Special case for commons base component. We insert common fields in the section
-              // fields rather then the base component fields
-              if (key === "commons") {
-                // commons fields are not objects, they are key/value pairs to be inserted as section fields
-                baseComponentsList.commons(paragraph, sectionFields, key, pkey);
-              } else {
-                // while other fields are objects with key/value properties
-                baseComponentsList[key](paragraph, sectionBaseComponentsData, key, pkey);
-              }
-            });
-          }
-        });
-      }
+      const thisBaseComponent = baseComponentsList[key](allParagraphs, baseComponents);
+      Object.assign(sectionBaseComponentsData, thisBaseComponent);
     });
-
-    // delete the empty commons base component as its properties are already added to the sectionFields object
-    delete sectionBaseComponentsData.commons;
 
     // a single sections object
     allSections.push({
@@ -92,6 +62,8 @@ const getPageSections = function(thisPage, allParagraphs) {
       ...sectionBaseComponentsData,
     });
   });
+
+  console.log(toCamelCase(allSections));
 
   return toCamelCase(allSections);
 };

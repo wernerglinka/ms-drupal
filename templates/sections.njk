@@ -11,7 +11,7 @@
       {% set params = section %}
       {% set site = site %}
 
-      <div class="section-wrapper {% if section.inContainer %}inContainer{% endif %}">
+      <div class="section-wrapper {% if section.commons.inContainer %}inContainer{% endif %} {% if section.commons.hasTopMargin %}hasTopMargin{% endif %} {% if section.commons.hasBottomMargin %}hasBottomMargin{% endif %}">
         {{ component(name, params, site) }}
       </div>
 

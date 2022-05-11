@@ -4,8 +4,8 @@
 {# this section receives props params and site #}
 
 <section 
-  class="section-cta-banner {% if params.hasTopPadding %}hasTopPadding{% endif %} {% if params.hasBottomPadding %}hasBottomPadding{% endif %} {% if params.colorIsDark %}isDark{% endif %}"
-  style="{% if params.backgroundColor %}background-color: {{ params.backgroundColor }};{% endif %}"
+  class="section-cta-banner {% if params.commons.hasTopPadding %}hasTopPadding{% endif %} {% if params.commons.hasBottomPadding %}hasBottomPadding{% endif %} {% if params.commons.colorIsDark %}isDark{% endif %}"
+  style="{% if params.commons.backgroundColor %}background-color: {{ params.commons.backgroundColor }};{% endif %}"
 >
   <div class="content">
     {% set info = params %}

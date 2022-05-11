@@ -1,14 +1,18 @@
 {% macro responsiveImage(image, siteMeta) %}
   <div class="responsive-wrapper js-progressive-image-wrapper" style="padding-bottom:{{ image.aspectRatio}}%;" >
 
+    {# strip the cloudinary base url, then process the link #}
+    {# user will add whole cloudinary url in the drupal backend. this is done for conv=enience #}
+    {% set imageID = image.src|replace(siteMeta.imagePrefix, '') %}
+
     {# assemble the image url #}
     {% set source = siteMeta.imagePrefix ~ image.src %}
 
     {# get image source for LRIP #}
-    {% set lowResImagesrc = siteMeta.imagePrefix ~ "w_100,c_fill,g_auto,f_auto/" ~ image.src %}
+    {% set lowResImagesrc = siteMeta.imagePrefix ~ "w_100,c_fill,g_auto,f_auto/" ~ imageID %}
 
     <img class="low-res" src="{{ lowResImagesrc }}" alt="{{ image.alt }}"/>
-    <img class="high-res" src="" alt="{{ image.alt }}" data-prefix="{{ siteMeta.imagePrefix }}" data-source="{{ image.src }}"/>
+    <img class="high-res" src="" alt="{{ image.alt }}" data-prefix="{{ siteMeta.imagePrefix }}" data-source="{{ imageID }}"/>
   </div>
   {% if image.caption %}
   <p class="caption">{{ image.caption }}</p>
