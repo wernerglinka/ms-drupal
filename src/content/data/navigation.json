@@ -6,9 +6,9 @@
       "bodyClass": "home"
     },
     {
-      "label": "Other Page",
-      "url": "/other-page",
-      "bodyClass": "otherPage"
+      "label": "The Ruhr Valley",
+      "url": "/the-ruhr-valley",
+      "bodyClass": "ruhr-valley"
     },
     {
       "label": "Blog",
