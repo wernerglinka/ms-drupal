@@ -1,8 +1,9 @@
+@use '../base/variables' as *;
+
 .header-wrapper {
   position: relative;
   z-index: 1000;
-  height: 90px;
-  margin-bottom: 50px;
+  height: $header-height;
 
   header {
     position: fixed;

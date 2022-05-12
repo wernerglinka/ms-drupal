@@ -1,0 +1,21 @@
+{% from "../partials/ctas.njk" import ctas %}
+{% from "../partials/responsive-image.njk" import responsiveImage %}
+{% from "../partials/text.njk" import text %}
+
+{# this section receives props params and site #}
+
+<section class="section-image-banner {% if params.commons.hasTopPadding %}hasTopPadding{% endif %} {% if params.commons.hasBottomPadding %}hasBottomPadding{% endif %}">
+  <div class="image-background">
+    {# site is in scope, was passed via the component macro #}
+    {{ responsiveImage(params.image, site) }}  
+  </div>  
+  <div class="container">
+    <div class="prose">
+      {{ text(params.text)}}
+
+      {% if params.hasCtas %}
+        {{ ctas(params.ctas) }}
+      {% endif %}
+    </div>
+  </div>
+</section>

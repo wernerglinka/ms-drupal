@@ -1,9 +1,9 @@
 {% macro text(info) %}
 
   {% if info.title %}
-    {% if info.header === "h1" %}
+    {% if info.header === "h1" or info.header === "H1"%}
       <h1>{{ info.title }}</h1>
-    {% elif info.header === "h2" %}
+    {% elif info.header === "h2" or info.header === "H2" %}
       <h2>{{ info.title }}</h2>
     {% else %}
       <h3>{{ info.title }}</h3>

@@ -6,6 +6,7 @@ const buildPageSections = require("./get-page-sections");
 // query fragments
 const includeFragment = require("./query-fragments/include");
 const sectionedPageFragment = require("./query-fragments/sectioned-page");
+const sectionImageBanner = require("./query-fragments/section-image-banner");
 const sectionIntroFragment = require("./query-fragments/section-intro");
 const sectionMediaFragment = require("./query-fragments/section-media");
 const sectionCtaBannerFragment = require("./query-fragments/section-cta-banner");
@@ -21,6 +22,7 @@ const getPageDataQuery = (serverURL, page) => {
   const query = commonTags.oneLineTrim`
     ${includeFragment}
     ${sectionedPageFragment}
+    ${sectionImageBanner}
     ${sectionIntroFragment}
     ${sectionMediaFragment}
     ${sectionCtaBannerFragment}
@@ -63,6 +65,8 @@ function plugin() {
         pageData.forEach(thisPage => {
           // get the page name
           const pageName = thisPage.attributes.title.toLowerCase().replace(/\s/g, "-");
+
+          console.log(pageName);
 
           // Build the initial page object
           // includes the page metadata and template

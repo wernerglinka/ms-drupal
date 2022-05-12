@@ -33,11 +33,12 @@ const getPageSections = function(thisPage, allParagraphs) {
     // Get the base component IDs for this section
     const sectionData = allSectionData.filter(thisSectionData => thisSectionData.id === thisSectionID);
 
-    // Build object with the simple fields for each section
+    // Build object with the simple fields for each section if they exist
     const sectionFields = {};
-    Object.keys(sectionData[0].attributes).forEach(key => {
-      sectionFields[key.replace("field_", "")] = sectionData[0].attributes[key];
-    });
+    sectionData[0].attributes &&
+      Object.keys(sectionData[0].attributes).forEach(key => {
+        sectionFields[key.replace("field_", "")] = sectionData[0].attributes[key];
+      });
 
     // Build a base component object which includes the object ID.
     // We'll use the object ID to get the base component data
@@ -62,8 +63,6 @@ const getPageSections = function(thisPage, allParagraphs) {
       ...sectionBaseComponentsData,
     });
   });
-
-  console.log(toCamelCase(allSections));
 
   return toCamelCase(allSections);
 };

@@ -1,0 +1,67 @@
+@use '../base/variables' as *;
+
+
+.section-image-banner {
+  position: relative;
+  margin-top: -$header-height;
+  margin-bottom: 130px;
+  padding-top: 1.2 * $header-height;
+  height: 30vw;
+  min-height: 300px;
+
+  @media (max-width: 600px) {
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .image-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    overflow: hidden;
+
+    @media (max-width: 600px) {
+      position: static;
+      height: auto;
+    }
+  }
+
+  .container {
+    position: relative;
+    height: 100%;
+  }
+
+  .prose {
+    position: absolute;
+    bottom: -95px;
+    left: 0;
+    width: 720px;
+    padding: 40px;
+    background-color: rgba(255,255,255,0.7);
+
+    @media (max-width: $tablet-breakpoint) {
+      bottom: auto;
+      top: 60px;
+      width: 100%;
+    }
+    @media (max-width: 600px) {
+      position: static;
+    }
+    @media (max-width: 500px) {
+      padding: 40px 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: $header-color;
+    }
+    p {
+      color: $header-color;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+  }
+}
