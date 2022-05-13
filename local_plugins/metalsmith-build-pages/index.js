@@ -10,6 +10,7 @@ const sectionImageBanner = require("./query-fragments/section-image-banner");
 const sectionIntroFragment = require("./query-fragments/section-intro");
 const sectionMediaFragment = require("./query-fragments/section-media");
 const sectionCtaBannerFragment = require("./query-fragments/section-cta-banner");
+const sectionMapFragment = require("./query-fragments/section-map");
 const paragraphCommonsFragment = require("./query-fragments/paragraph-commons");
 const paragraphTextFragment = require("./query-fragments/paragraph-text");
 const paragraphCtasFragment = require("./query-fragments/paragraph-ctas");
@@ -17,6 +18,7 @@ const paragraphAudioFragment = require("./query-fragments/paragraph-audio");
 const paragraphImageFragment = require("./query-fragments/paragraph-image");
 const paragraphLottieFragment = require("./query-fragments/paragraph-lottie");
 const paragraphVideoFragment = require("./query-fragments/paragraph-video");
+const paragraphGeomapFragment = require("./query-fragments/paragraph-geomap");
 
 const getPageDataQuery = (serverURL, page) => {
   const query = commonTags.oneLineTrim`
@@ -26,6 +28,7 @@ const getPageDataQuery = (serverURL, page) => {
     ${sectionIntroFragment}
     ${sectionMediaFragment}
     ${sectionCtaBannerFragment}
+    ${sectionMapFragment}
     ${paragraphCommonsFragment}
     ${paragraphTextFragment}
     ${paragraphCtasFragment}
@@ -33,6 +36,7 @@ const getPageDataQuery = (serverURL, page) => {
     ${paragraphImageFragment}
     ${paragraphLottieFragment}
     ${paragraphVideoFragment}
+    ${paragraphGeomapFragment}
   `;
   return serverURL + page + query;
 };
@@ -49,14 +53,12 @@ function plugin() {
     const serverUrl = "https://dev-dorka.pantheonsite.io";
     const pageURL = "/jsonapi/node/sectioned_page";
     const sectionedPagesRequest = getPageDataQuery(serverUrl, pageURL);
-
     // get data from the DORKA server API
     fetch(sectionedPagesRequest)
       .then(response => response.json())
       .then(json => {
         // Get all pages data. Page data includes the page id which we need to get the page sections
         const pageData = json.data.filter(thisPage => thisPage.type.includes("sectioned_page"));
-
         // Get all paragraphs. All sections and base components are paragraphs. This list will
         // be used to get the page sections and then the section base components data
         const allParagraphs = json.included;
