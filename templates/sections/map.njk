@@ -660,7 +660,6 @@
   }
 </style>
 
-
 <section class="section-map {% if params.commons.hasTopPadding %}hasTopPadding{% endif %} {% if params.commons.hasBottomPadding %}hasBottomPadding{% endif %}">
   <div class="container">
     <div class="prose">
@@ -670,11 +669,18 @@
   </div>
 </section>
 
-
-
 <script>
   function renderMap() {
-    var map = L.map('map').setView([{{ params.map.mapCenter.latlon }}], {{ params.map.zoom }});
+    // Icon options
+    const iconOptions = {
+      iconUrl: '/assets/images/map-pin.svg',
+      iconSize: [40, 40]
+    }
+
+    // Creating a custom icon
+    const mapPin = L.icon(iconOptions);
+    
+    const map = L.map('map').setView([{{ params.map.mapCenter.latlon }}], {{ params.map.zoom }});
 
     L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution:'',
@@ -684,6 +690,24 @@
       zoomOffset: -1,
       accessToken: "pk.eyJ1Ijoid2VybmVyZ2xpbmthIiwiYSI6ImNsMjk3N3owNDAwY2oza254aWVibDd6eDYifQ.Q-VSAPfrw9lb1vyW5RUU4w",
     }).addTo(map);
+
+    let thisMarker;
+    let markerOptions;
+    let markerContent;
+
+    {% for marker in params.map.markers %}
+    markerOptions = {
+      title: "{{ marker.markerTitle }}",
+      clickable: true,
+      icon: mapPin
+    }
+
+    markerContent = "<h4>{{ marker.markerBody.value }}</h4><br><a href='{{ marker.markerLink.uri }}' target='_blank' rel='noopener noreferrer'>{{ marker.markerLink.title }}</a>";
+    thisMarker = new L.Marker([{{ marker.coordinates.latlon }}], markerOptions);
+    thisMarker.bindPopup(markerContent).openPopup();
+    thisMarker.addTo(map);
+    {% endfor %}
+
   }
 
   const scriptTag = document.createElement('script');

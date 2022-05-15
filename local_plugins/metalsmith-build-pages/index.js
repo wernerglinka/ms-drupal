@@ -19,6 +19,7 @@ const paragraphImageFragment = require("./query-fragments/paragraph-image");
 const paragraphLottieFragment = require("./query-fragments/paragraph-lottie");
 const paragraphVideoFragment = require("./query-fragments/paragraph-video");
 const paragraphGeomapFragment = require("./query-fragments/paragraph-geomap");
+const paragraphMapMarkersFragment = require("./query-fragments/paragraph-map-markers");
 
 const getPageDataQuery = (serverURL, page) => {
   const query = commonTags.oneLineTrim`
@@ -37,6 +38,7 @@ const getPageDataQuery = (serverURL, page) => {
     ${paragraphLottieFragment}
     ${paragraphVideoFragment}
     ${paragraphGeomapFragment}
+    ${paragraphMapMarkersFragment}
   `;
   return serverURL + page + query;
 };
@@ -53,6 +55,7 @@ function plugin() {
     const serverUrl = "https://dev-dorka.pantheonsite.io";
     const pageURL = "/jsonapi/node/sectioned_page";
     const sectionedPagesRequest = getPageDataQuery(serverUrl, pageURL);
+
     // get data from the DORKA server API
     fetch(sectionedPagesRequest)
       .then(response => response.json())
@@ -63,12 +66,12 @@ function plugin() {
         // be used to get the page sections and then the section base components data
         const allParagraphs = json.included;
 
+        // console.log(allParagraphs);
+
         // Build all pages
         pageData.forEach(thisPage => {
           // get the page name
           const pageName = thisPage.attributes.title.toLowerCase().replace(/\s/g, "-");
-
-          console.log(pageName);
 
           // Build the initial page object
           // includes the page metadata and template

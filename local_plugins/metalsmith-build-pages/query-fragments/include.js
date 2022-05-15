@@ -12,5 +12,6 @@ module.exports = commonTags.oneLineTrim`
   field_sections.field_image,
   field_sections.field_lottie,
   field_sections.field_video,
-  field_sections.field_map
+  field_sections.field_map,
+  field_sections.field_map.field_markers
 `;
