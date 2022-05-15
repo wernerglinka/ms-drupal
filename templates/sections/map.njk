@@ -661,12 +661,10 @@
 </style>
 
 <section class="section-map {% if params.commons.hasTopPadding %}hasTopPadding{% endif %} {% if params.commons.hasBottomPadding %}hasBottomPadding{% endif %}">
-  <div class="container">
-    <div class="prose">
-      {{ text(params.text)}}
-    </div>
-    <div id="map" style="height:{{ params.map.mapHeight}}px"></div>
+  <div class="prose">
+    {{ text(params.text)}}
   </div>
+  <div id="map" style="height:{{ params.map.mapHeight}}px"></div>
 </section>
 
 <script>

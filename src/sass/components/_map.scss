@@ -1,0 +1,11 @@
+.section-map {
+  .prose {
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @media (max-width: 1520px) {
+      max-width: 100%;
+      padding: 0 40px;
+    }  
+  }
+}
