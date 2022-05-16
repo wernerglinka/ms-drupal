@@ -1,6 +1,19 @@
 /**
  * video
- * Build the base component video which inlcudes simple key/value pairs.
+ * Build the base component video object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ * @example
+ * {
+ *  "video": {
+ *    "aspectRatio": "",
+ *    "id": "",
+ *    "tn": "",
+ *    "v_src": "",
+ *    "caption": "",
+ *   }
+ * }
  */
 
 const video = function(allParagraphs, baseComponents) {

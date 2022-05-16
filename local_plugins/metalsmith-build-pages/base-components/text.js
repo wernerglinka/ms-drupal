@@ -1,6 +1,17 @@
 /**
  * text
- * Build the base component text which inlcudes objects and simple key/value pairs.
+ * Build the base component text object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ * @example
+   {
+    "text": {
+      "title": "",
+      "header": "",
+      "sub_title": "",
+      "prose": "",
+    }
  */
 
 const text = function(allParagraphs, baseComponents) {

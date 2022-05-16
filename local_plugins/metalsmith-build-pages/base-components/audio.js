@@ -1,6 +1,18 @@
 /**
  * audio
- * Build the base component audio which inlcudes simple key/value pairs.
+ * Build the base component audio object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ * @example
+ * {
+ * "audio": {
+ *   "aspectRatio": "",
+ *   "bgIMage": "",
+ *   "caption": "",
+ *   "mpeg": "",
+ *   "ogg": "",
+ * }
  */
 
 const audio = function(allParagraphs, baseComponents) {

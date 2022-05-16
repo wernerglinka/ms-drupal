@@ -1,3 +1,22 @@
+/**
+ * 
+ * @param {Object} allParagraphs 
+ * @param {Object} baseComponents 
+ * @returns {Object}
+ * @example
+ * {
+    "ctas": [
+      {
+        button_style: 'Primary',
+        is_button: false,
+        is_external: true,
+        label: 'Visit Nunjucks',
+        url: 'https://mozilla.github.io/nunjucks/'
+      },
+      ...
+    ]
+  }
+ */
 const ctas = function(allParagraphs, baseComponents) {
   const key = "ctas";
   const thisBaseComponent = [];
@@ -15,7 +34,6 @@ const ctas = function(allParagraphs, baseComponents) {
     });
     thisBaseComponent.push(temp);
   });
-
   return { [key]: thisBaseComponent };
 };
 

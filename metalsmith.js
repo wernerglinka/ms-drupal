@@ -65,7 +65,11 @@ Metalsmith(__dirname)
     nodeVersion: process.version,
   })
 
-  .use(buildPages())
+  .use(
+    buildPages({
+      source: "https://dev-dorka.pantheonsite.io",
+    })
+  )
 
   .use(when(isProduction, drafts()))
 

@@ -678,7 +678,7 @@
     // Creating a custom icon
     const mapPin = L.icon(iconOptions);
     
-    const map = L.map('map').setView([{{ params.map.mapCenter.latlon }}], {{ params.map.zoom }});
+    const map = L.map('map').setView([{{ params.map.mapCenter }}], {{ params.map.zoom }});
 
     L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution:'',
@@ -700,8 +700,8 @@
       icon: mapPin
     }
 
-    markerContent = "<h4>{{ marker.markerBody.value }}</h4><br><a href='{{ marker.markerLink.uri }}' target='_blank' rel='noopener noreferrer'>{{ marker.markerLink.title }}</a>";
-    thisMarker = new L.Marker([{{ marker.coordinates.latlon }}], markerOptions);
+    markerContent = "<h4>{{ marker.markerBody }}</h4><br><a href='{{ marker.markerLink.url }}' target='_blank' rel='noopener noreferrer'>{{ marker.markerLink.title }}</a>";
+    thisMarker = new L.Marker([{{ marker.coordinates }}], markerOptions);
     thisMarker.bindPopup(markerContent).openPopup();
     thisMarker.addTo(map);
     {% endfor %}

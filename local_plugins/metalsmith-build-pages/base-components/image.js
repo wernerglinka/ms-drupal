@@ -1,6 +1,17 @@
 /**
  * image
- * Build the base component image which inlcudes simple key/value pairs.
+ * Build the base component image object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ *
+ * @example
+ * {
+ *  "image": {
+ *   "src": "https://res.cloudinary.com/djd0plux8/image/upload/v1652291609/drupal-backend/zeche-nordstern_hotwoo.jpg",
+ *   "alt": "Zeche Nordstern",
+ *   "aspectRatio": "38",
+ *  }
  */
 
 const image = function(allParagraphs, baseComponents) {
@@ -14,6 +25,7 @@ const image = function(allParagraphs, baseComponents) {
       });
     }
   });
+
   return { [key]: thisBaseComponent };
 };
 

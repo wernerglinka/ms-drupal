@@ -1,6 +1,16 @@
 /**
  * lottie
- * Build the base component lottie which inlcudes simple key/value pairs.
+ * Build the base component lottie object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ * @example
+ * {
+ * "lottie": {
+    "l_src": "",
+    "autoplay": "",
+    "loop": "",
+   }
  */
 
 const lottie = function(allParagraphs, baseComponents) {

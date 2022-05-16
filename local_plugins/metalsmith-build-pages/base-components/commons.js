@@ -3,7 +3,25 @@ const isColorDark = require("../is-color-dark");
 
 /**
  * commons
- * Build the base component commons which inlcudes boolen, a color object and simple key/value pairs.
+ * Build the base component commons object which inlcudes boolean, a color object.
+ * @param {Object} allParagraphs
+ * @param {Object} baseComponents
+ * @returns {Object}
+ * @example
+ * {
+ * "commons": {
+      background_color: 'rgba(0, 0, 255, 0.8)',
+      colorIsDark: true,
+      has_bottom_margin: true,
+      has_bottom_padding: true,
+      has_top_margin: true,
+      has_top_padding: true,
+      in_container: '',
+      is_animated: '',
+      is_disabled: '',
+      target_id: ''
+    }
+}
  */
 
 const commons = function(allParagraphs, baseComponents) {

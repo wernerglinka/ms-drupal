@@ -1,62 +1,54 @@
+const debug = require("debug")("metalsmith-drupal-data-source-structured-pages");
 const fetch = require("node-fetch");
-const commonTags = require("common-tags");
 const buildInitialPageObject = require("./get-page-object");
 const buildPageSections = require("./get-page-sections");
+const getPageQueryData = require("./get-page-query");
 
-// query fragments
-const includeFragment = require("./query-fragments/include");
-const sectionedPageFragment = require("./query-fragments/sectioned-page");
-const sectionImageBanner = require("./query-fragments/section-image-banner");
-const sectionIntroFragment = require("./query-fragments/section-intro");
-const sectionMediaFragment = require("./query-fragments/section-media");
-const sectionCtaBannerFragment = require("./query-fragments/section-cta-banner");
-const sectionMapFragment = require("./query-fragments/section-map");
-const paragraphCommonsFragment = require("./query-fragments/paragraph-commons");
-const paragraphTextFragment = require("./query-fragments/paragraph-text");
-const paragraphCtasFragment = require("./query-fragments/paragraph-ctas");
-const paragraphAudioFragment = require("./query-fragments/paragraph-audio");
-const paragraphImageFragment = require("./query-fragments/paragraph-image");
-const paragraphLottieFragment = require("./query-fragments/paragraph-lottie");
-const paragraphVideoFragment = require("./query-fragments/paragraph-video");
-const paragraphGeomapFragment = require("./query-fragments/paragraph-geomap");
-const paragraphMapMarkersFragment = require("./query-fragments/paragraph-map-markers");
+/**
+ * @typedef Options
+ * @property {String} key
+ */
 
-const getPageDataQuery = (serverURL, page) => {
-  const query = commonTags.oneLineTrim`
-    ${includeFragment}
-    ${sectionedPageFragment}
-    ${sectionImageBanner}
-    ${sectionIntroFragment}
-    ${sectionMediaFragment}
-    ${sectionCtaBannerFragment}
-    ${sectionMapFragment}
-    ${paragraphCommonsFragment}
-    ${paragraphTextFragment}
-    ${paragraphCtasFragment}
-    ${paragraphAudioFragment}
-    ${paragraphImageFragment}
-    ${paragraphLottieFragment}
-    ${paragraphVideoFragment}
-    ${paragraphGeomapFragment}
-    ${paragraphMapMarkersFragment}
-  `;
-  return serverURL + page + query;
+/** @type {Options} */
+const defaults = {
+  source: "",
 };
 
 /**
- * Metalsmith plugin to build pages from api data
+ * Normalize plugin options
+ * @param {Options} [options]
+ * @returns {Object}
  */
-function plugin() {
+function normalizeOptions(options) {
+  return Object.assign({}, defaults, options || {});
+}
+
+/**
+ * A Metalsmith plugin to fetch sectioned page data from a Drupal JSON API.
+ *
+ * @param {Options} options
+ * @returns {import('metalsmith').Plugin}
+ */
+function buildSectionedPages(options) {
+  options = normalizeOptions(options);
+  if (options.source === "") {
+    debug("Found no source option");
+    return function metadata() {};
+  }
+  debug("Running with options: %O", options);
+
   return (files, metalsmith, done) => {
     /**
      * Get the page data from the api
      * The site content is managed by a Drupal9 site and the content is fetched via the site JSON API
      */
-    const serverUrl = "https://dev-dorka.pantheonsite.io";
+    const serverUrl = options.source;
     const pageURL = "/jsonapi/node/sectioned_page";
-    const sectionedPagesRequest = getPageDataQuery(serverUrl, pageURL);
+    const sectionedPagesRequest = serverUrl + pageURL + getPageQueryData;
 
-    // get data from the DORKA server API
+    debug("Request URL: %O", sectionedPagesRequest);
+
+    // fetch all page data from the API
     fetch(sectionedPagesRequest)
       .then(response => response.json())
       .then(json => {
@@ -66,12 +58,14 @@ function plugin() {
         // be used to get the page sections and then the section base components data
         const allParagraphs = json.included;
 
-        // console.log(allParagraphs);
+        debug("All available sections and base components: %O", allParagraphs);
 
         // Build all pages
         pageData.forEach(thisPage => {
           // get the page name
           const pageName = thisPage.attributes.title.toLowerCase().replace(/\s/g, "-");
+
+          debug("Page Name: %O", pageName);
 
           // Build the initial page object
           // includes the page metadata and template
@@ -90,6 +84,8 @@ function plugin() {
             },
           };
 
+          debug("Page File: %O", page);
+
           // This is the key for the page object
           const fileName = `${pageName}.md`;
 
@@ -102,4 +98,4 @@ function plugin() {
   };
 }
 
-module.exports = plugin;
+module.exports = buildSectionedPages;
