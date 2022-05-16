@@ -18,7 +18,7 @@ const writeMetadata = require("metalsmith-writemetadata");
 const marked = require("marked");
 const esbuild = require("./local_plugins/metalsmith-esbuild");
 
-const buildPages = require("./local_plugins/metalsmith-build-pages");
+const injectSectionedPages = require("./local_plugins/metalsmith-build-sectioned-pages");
 
 const { dependencies } = require("./package.json");
 const isProduction = process.env.NODE_ENV === "production";
@@ -66,7 +66,7 @@ Metalsmith(__dirname)
   })
 
   .use(
-    buildPages({
+    injectSectionedPages({
       source: "https://dev-dorka.pantheonsite.io",
     })
   )
